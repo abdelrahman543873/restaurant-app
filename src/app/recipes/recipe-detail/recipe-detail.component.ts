@@ -19,9 +19,11 @@ export class RecipeDetailComponent implements OnInit {
   recipe: Recipe;
 
   ngOnInit() {
-    this.recipe = this.recipeService.getRecipe(
-      +this.route.snapshot.params["id"]
-    );
+    this.route.params.subscribe((params) => {
+      this.recipe = this.recipeService.getRecipe(
+        +params["id"] - 1
+      );
+    });
   }
 
   addIngredients(ingredients: Ingredient[]) {
