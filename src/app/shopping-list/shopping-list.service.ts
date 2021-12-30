@@ -16,11 +16,15 @@ export class ShoppingListService {
   ];
 
   getIngredients() {
-    return this.ingredients.slice();
+    return this.ingredients;
   }
 
   getIngredient(index: number): Ingredient {
     return this.ingredients[index];
+  }
+
+  updateIngredient(index: number, ingredient: Ingredient) {
+    this.ingredients[index] = ingredient;
   }
 
   addIngredient(ingredient: Ingredient) {
