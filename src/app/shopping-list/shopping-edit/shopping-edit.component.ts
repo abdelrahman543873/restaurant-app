@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
-import { Ingredient } from "../../shared/ingredient.model";
+import { Component, OnInit } from "@angular/core";
+import { NgForm } from "@angular/forms";
 import { ShoppingListService } from "../shopping-list.service";
 
 @Component({
@@ -19,14 +12,11 @@ export class ShoppingEditComponent implements OnInit {
 
   ngOnInit() {}
 
-  addIngredients(
-    event: MouseEvent,
-    amountInput: HTMLInputElement,
-    nameInput: HTMLInputElement
-  ) {
+  addIngredients(formInput: NgForm) {
+    const form = formInput.value;
     this.shoppingListService.onIngredientAdded.next({
-      name: nameInput.value,
-      amount: +amountInput.value,
+      name: form.name,
+      amount: +form.amount,
     });
   }
 }
