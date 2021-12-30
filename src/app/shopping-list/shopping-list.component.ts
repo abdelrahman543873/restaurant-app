@@ -19,6 +19,9 @@ export class ShoppingListComponent implements OnInit {
         this.ingredients.push(ingredient);
       }
     );
+    this.shoppingListService.onIngredientDeleted.subscribe(() => {
+      this.ingredients = this.shoppingListService.getIngredients();
+    });
   }
 
   onEditItem(index: number) {
