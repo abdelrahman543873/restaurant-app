@@ -1,13 +1,9 @@
+import { getRandomInt } from "./../../utils/hot-functions";
 import { Component, OnInit } from "@angular/core";
-import {
-  Form,
-  FormArray,
-  FormControl,
-  FormGroup,
-  Validators,
-} from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Params } from "@angular/router";
 import { RecipeService } from "../recipe.service";
+import { Recipe } from "../recipe.model";
 
 @Component({
   selector: "app-recipe-edit",
@@ -24,7 +20,7 @@ export class RecipeEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.recipeId = params.id;
+      this.recipeId = +params.id;
       this.initForm();
     });
   }
@@ -34,7 +30,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm() {
-    const recipe = this.recipeService.getRecipe(+this.recipeId - 1);
+    const recipe = this.recipeService.getRecipe(this.recipeId - 1);
     const formArray = [];
     for (let ingredient of recipe.ingredients) {
       formArray.push(
@@ -55,7 +51,16 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
-  onSubmit() {}
+  onSubmit() {
+    const recipe = new Recipe(
+      this.recipeId,
+      this.recipeForm.value["name"],
+      this.recipeForm.value["description"],
+      this.recipeForm.value["imagePath"],
+      this.recipeForm.value["ingredients"]
+    );
+    this.recipeService.updateRecipe(this.recipeId, recipe);
+  }
 
   onIngredientAdded() {
     (<FormArray>this.recipeForm.get("ingredients")).controls.push(
