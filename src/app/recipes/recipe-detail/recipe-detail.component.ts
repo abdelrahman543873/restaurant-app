@@ -2,7 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from "@angular/core";
 import { Recipe } from "../recipe.model";
 import { ShoppingListService } from "../../shopping-list/shopping-list.service";
 import { Ingredient } from "../../shared/ingredient.model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { RecipeService } from "../recipe.service";
 import { Subscription } from "rxjs";
 
@@ -15,14 +15,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(
     private shoppingListService: ShoppingListService,
     private recipeService: RecipeService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
   recipe: Recipe;
   sub: Subscription;
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
-      this.recipe = this.recipeService.getRecipe(+params["id"] - 1);
+      this.recipe = this.recipeService.getRecipe(+params["id"]);
     });
   }
 
@@ -30,6 +31,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     ingredients.forEach((ingredient) => {
       this.shoppingListService.addIngredient(ingredient);
     });
+  }
+
+  deleteRecipe(id: number) {
+    console.log(id);
+    this.recipeService.deleteRecipe(id);
+    this.router.navigate(["recipes"]);
   }
 
   ngOnDestroy() {

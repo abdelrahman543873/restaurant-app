@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { Ingredient } from "../shared/ingredient.model";
 import { Recipe } from "./recipe.model";
@@ -9,6 +9,7 @@ import { Recipe } from "./recipe.model";
 export class RecipeService {
   constructor() {}
   recipeSelected = new Subject<Recipe>();
+  recipeDeleted = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(
       1,
@@ -39,6 +40,17 @@ export class RecipeService {
   }
 
   getRecipe(id: number) {
-    return this.recipes[id];
+    const recipe = this.recipes.filter((recipeEl) => {
+      return recipeEl.id === id;
+    });
+    return recipe[0];
+  }
+
+  deleteRecipe(id: number) {
+    const recipes = this.recipes.filter((recipeEl) => {
+      return recipeEl.id !== id;
+    });
+    this.recipes = recipes;
+    this.recipeDeleted.next(recipes);
   }
 }
