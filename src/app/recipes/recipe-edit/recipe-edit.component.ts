@@ -3,6 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { RecipeService } from "../recipe.service";
 import { Recipe } from "../recipe.model";
+import { ShoppingListService } from "../../shopping-list/shopping-list.service";
 
 @Component({
   selector: "app-recipe-edit",
@@ -13,7 +14,8 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private shoppingListService: ShoppingListService
   ) {}
   recipeForm: FormGroup;
   recipeId: number;
@@ -52,7 +54,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeId);
     const recipe = new Recipe(
       this.recipeId,
       this.recipeForm.value["name"],
@@ -74,5 +75,17 @@ export class RecipeEditComponent implements OnInit {
         ]),
       })
     );
+  }
+
+  onDeleteIngredient(ingredient: any) {
+    this.shoppingListService.deleteIngredient(ingredient.value);
+    (<FormArray>this.recipeForm.get("ingredients")).controls = (<FormArray>(
+      this.recipeForm.get("ingredients")
+    )).controls.filter((formGroup: FormGroup) => {
+      return (
+        formGroup.value.name !== ingredient.value.name &&
+        formGroup.value.amount !== ingredient.value.amount
+      );
+    });
   }
 }
