@@ -12,7 +12,8 @@ import { ShoppingEditComponent } from "./shopping-list/shopping-edit/shopping-ed
 import { DropdownDirective } from "./shared/dropdown.directive";
 import { RoutingModule } from "./shared/routing.module";
 import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component";
-
+import { HttpClientModule } from "@angular/common/http";
+import { AuthComponent } from "./auth/auth.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,8 +26,15 @@ import { RecipeEditComponent } from "./recipes/recipe-edit/recipe-edit.component
     ShoppingEditComponent,
     DropdownDirective,
     RecipeEditComponent,
+    AuthComponent,
   ],
-  imports: [BrowserModule, FormsModule, RoutingModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    RoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
