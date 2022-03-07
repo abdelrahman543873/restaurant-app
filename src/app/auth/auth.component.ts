@@ -20,19 +20,16 @@ export class AuthComponent implements OnInit {
   onSubmit(input: NgForm) {
     if (!input.form.valid) return;
     this.isLoading = true;
-    if (!this.isLoginMode)
-      this.authService
-        .signup(input.value.email, input.value.password)
-        .subscribe(
-          (resData) => {
-            console.log(resData);
-            this.isLoading = false;
-          },
-          (error) => {
-            this.isLoading = false;
-            console.log(error);
-          }
-        );
+    this.authService.signup(input.value.email, input.value.password).subscribe(
+      (resData) => {
+        console.log(resData);
+        this.isLoading = false;
+      },
+      (error) => {
+        this.isLoading = false;
+        console.log(error);
+      }
+    );
     input.reset();
   }
 }
