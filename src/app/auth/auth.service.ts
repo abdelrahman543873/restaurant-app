@@ -29,6 +29,18 @@ export class AuthService {
     this.user.next(null);
   }
 
+  autoLogin() {
+    const userData: User = JSON.parse(localStorage.getItem("UserData"));
+    if (!userData) return;
+    const loadedUser = new User(
+      userData.email,
+      userData.id,
+      "randomToken",
+      new Date()
+    );
+    if (loadedUser.token) this.user.next(loadedUser);
+  }
+
   private handleAuthentication(input: User) {
     const user = new User(input.email, "randomId", "randomString", new Date());
     this.user.next(user);
