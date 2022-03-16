@@ -11,23 +11,17 @@ import { LoadingSpinnerComponent } from "./shared/loading-spinner/loading-spinne
 import { AlertComponent } from "./alert/alert.component";
 import { RecipesModule } from "./recipes/recipes.module";
 import { ShoppingModule } from "./shopping-list/shopping.module";
+import { SharedModule } from "./shared/shared.module";
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    HeaderComponent,
-    DropdownDirective,
-    LoadingSpinnerComponent,
-    AlertComponent,
-  ],
+  declarations: [AppComponent, AuthComponent, HeaderComponent],
   imports: [
     BrowserModule,
     FormsModule,
     RoutingModule,
-    ReactiveFormsModule,
     HttpClientModule,
     RecipesModule,
     ShoppingModule,
+    SharedModule,
   ],
   bootstrap: [AppComponent],
 })

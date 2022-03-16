@@ -4,9 +4,9 @@ import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
 import { RecipeItemComponent } from "./recipe-list/recipe-item/recipe-item.component";
 import { RecipeListComponent } from "./recipe-list/recipe-list.component";
 import { RecipesComponent } from "./recipes.component";
-import { CommonModule } from "@angular/common";
 import { RecipesRoutingModule } from "./recipes-routing.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -17,10 +17,10 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     RecipeDetailComponent,
   ],
   imports: [
-    CommonModule,
     RecipesRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
