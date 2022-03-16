@@ -44,4 +44,8 @@ export class AuthComponent implements OnInit {
     );
     input.reset();
   }
+
+  onHandleError() {
+    this.error = null;
+  }
 }
