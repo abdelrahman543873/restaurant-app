@@ -8,7 +8,9 @@ import { User } from "./user.model";
 export class AuthService {
   constructor(private readonly http: HttpClient) {}
 
-  user = new BehaviorSubject<User>(null);
+  user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+
+  private tokenExpirationTimer: any;
 
   signup(email: string, password: string) {
     return this.http.post("https://signup", { email, password }).pipe(
@@ -27,6 +29,15 @@ export class AuthService {
 
   logout() {
     this.user.next(null);
+    localStorage.clear();
+    if (this.tokenExpirationTimer) clearTimeout(this.tokenExpirationTimer);
+    this.tokenExpirationTimer = null;
+  }
+
+  autoLogout(expirationDuration: number) {
+    this.tokenExpirationTimer = setTimeout(() => {
+      this.logout();
+    }, expirationDuration);
   }
 
   autoLogin() {
