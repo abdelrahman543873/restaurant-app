@@ -5,8 +5,8 @@ import { RecipeItemComponent } from "./recipe-list/recipe-item/recipe-item.compo
 import { RecipeListComponent } from "./recipe-list/recipe-list.component";
 import { RecipesComponent } from "./recipes.component";
 import { CommonModule } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms";
 import { RecipesRoutingModule } from "./recipes-routing.module";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,7 +16,12 @@ import { RecipesRoutingModule } from "./recipes-routing.module";
     RecipeListComponent,
     RecipeDetailComponent,
   ],
-  imports: [CommonModule, ReactiveFormsModule, RecipesRoutingModule],
+  imports: [
+    CommonModule,
+    RecipesRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class RecipesModule {}
