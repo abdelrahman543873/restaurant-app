@@ -6,6 +6,7 @@ const routes: Routes = [
   { path: " ", redirectTo: "recipes", pathMatch: "full" },
   { path: "auth", component: AuthComponent },
   { path: "**", redirectTo: "recipes" },
+  { path: "recipes", loadChildren: "../recipes/recipes.module#RecipesModule" },
 ];
 
 @NgModule({
