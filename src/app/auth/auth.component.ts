@@ -3,6 +3,7 @@ import { NgForm } from "@angular/forms";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
+import { User } from "./user.model";
 
 @Component({
   selector: "app-auth",
@@ -20,6 +21,7 @@ export class AuthComponent implements OnInit {
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
   }
+
   onSubmit(input: NgForm) {
     this.isLoading = true;
     if (!input.form.valid) return;
@@ -40,6 +42,9 @@ export class AuthComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.error = error.message;
+        this.authService.user.next(
+          new User(input.value.email, "randomId", "randomToken", new Date())
+        );
       }
     );
     input.reset();
