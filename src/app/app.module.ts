@@ -6,7 +6,6 @@ import { HeaderComponent } from "./header/header.component";
 import { RoutingModule } from "./shared/routing.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AuthComponent } from "./auth/auth.component";
-import { RecipesModule } from "./recipes/recipes.module";
 import { ShoppingModule } from "./shopping-list/shopping.module";
 import { SharedModule } from "./shared/shared.module";
 @NgModule({
