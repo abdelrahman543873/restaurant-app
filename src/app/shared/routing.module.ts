@@ -5,8 +5,11 @@ import { AuthComponent } from "../auth/auth.component";
 const routes: Routes = [
   { path: " ", redirectTo: "recipes", pathMatch: "full" },
   { path: "auth", component: AuthComponent },
-  { path: "**", redirectTo: "recipes" },
-  { path: "recipes", loadChildren: "../recipes/recipes.module#RecipesModule" },
+  {
+    path: "recipes",
+    loadChildren: () =>
+      import("../recipes/recipes.module").then((m) => m.RecipesModule),
+  },
 ];
 
 @NgModule({
