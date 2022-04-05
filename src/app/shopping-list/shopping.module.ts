@@ -6,8 +6,8 @@ import { ShoppingListComponent } from "./shopping-list.component";
 import { SharedModule } from "../shared/shared.module";
 
 @NgModule({
-  declarations: [ShoppingEditComponent, ShoppingListComponent],
   imports: [SharedModule, FormsModule, ShoppingRoutingModule],
+  declarations: [ShoppingEditComponent, ShoppingListComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ShoppingModule {}
