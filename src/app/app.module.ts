@@ -8,7 +8,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { AuthComponent } from "./auth/auth.component";
 import { SharedModule } from "./shared/shared.module";
 import { StoreModule } from "@ngrx/store";
-import { shoppingListReducer } from "./shopping-list/store/shopping-list.reducer";
+import { appReducer } from "./store/app.store";
 @NgModule({
   declarations: [AppComponent, AuthComponent, HeaderComponent],
   imports: [
@@ -17,7 +17,7 @@ import { shoppingListReducer } from "./shopping-list/store/shopping-list.reducer
     FormsModule,
     HttpClientModule,
     SharedModule,
-    StoreModule.forRoot({ shoppingList: shoppingListReducer }),
+    StoreModule.forRoot(appReducer),
   ],
   bootstrap: [AppComponent],
 })

@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { catchError, tap } from "rxjs/operators";
-import { throwError, Subject, BehaviorSubject } from "rxjs";
+import { throwError, BehaviorSubject } from "rxjs";
 import { User } from "./user.model";
+import { Store } from "@ngrx/store";
+import { AppState } from "../store/app.store";
+import { Login, Logout } from "./store/auth.actions";
 
 @Injectable({ providedIn: "root" })
 export class AuthService {
-  constructor(private readonly http: HttpClient) {}
+  constructor(
+    private readonly http: HttpClient,
+    private store: Store<AppState>
+  ) {}
 
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
 
@@ -28,8 +34,7 @@ export class AuthService {
   }
 
   logout() {
-    this.user.next(null);
-    localStorage.clear();
+    this.store.dispatch(new Logout());
     if (this.tokenExpirationTimer) clearTimeout(this.tokenExpirationTimer);
     this.tokenExpirationTimer = null;
   }
@@ -41,20 +46,26 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: User = JSON.parse(localStorage.getItem("UserData"));
-    if (!userData) return;
-    const loadedUser = new User(
-      userData.email,
-      userData.id,
-      "randomToken",
-      new Date()
-    );
-    if (loadedUser.token) this.user.next(loadedUser);
+    this.store.select("auth").subscribe((stateData) => {
+      if (!stateData.user) return;
+      const loadedUser = new User(
+        stateData.user.email,
+        stateData.user.id,
+        "randomToken",
+        new Date()
+      );
+      if (loadedUser.token) this.user.next(loadedUser);
+    });
   }
 
   private handleAuthentication(input: User) {
-    const user = new User(input.email, "randomId", "randomString", new Date());
-    this.user.next(user);
-    localStorage.setItem("userData", JSON.stringify(user));
+    this.store.dispatch(
+      new Login({
+        email: input.email,
+        id: "randomId",
+        _token: "randomString",
+        _tokenExpirationDate: new Date(),
+      })
+    );
   }
 }

@@ -4,8 +4,8 @@ import { ActivatedRoute, Params, Router } from "@angular/router";
 import { RecipeService } from "../recipe.service";
 import { Recipe } from "../recipe.model";
 import { Store } from "@ngrx/store";
-import { AppState } from "../../shopping-list/store/shopping-list.reducer";
 import { DeleteIngredient } from "../../shopping-list/store/shopping-list.actions";
+import { AppState } from '../../store/app.store';
 
 @Component({
   selector: "app-recipe-edit",

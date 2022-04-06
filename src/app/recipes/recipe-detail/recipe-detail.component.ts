@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { RecipeService } from "../recipe.service";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
-import { AppState } from "../../shopping-list/store/shopping-list.reducer";
 import { AddIngredients } from "../../shopping-list/store/shopping-list.actions";
+import { AppState } from "../../store/app.store";
 
 @Component({
   selector: "app-recipe-detail",

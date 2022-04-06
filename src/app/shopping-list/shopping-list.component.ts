@@ -1,10 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-
-import { Ingredient } from "../shared/ingredient.model";
 import { Observable } from "rxjs";
-import { AppState, State } from "./store/shopping-list.reducer";
+import { State } from "./store/shopping-list.reducer";
 import { StartEdit } from "./store/shopping-list.actions";
+import { AppState } from "../store/app.store";
 
 @Component({
   selector: "app-shopping-list",

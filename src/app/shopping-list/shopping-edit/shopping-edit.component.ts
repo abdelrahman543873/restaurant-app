@@ -4,7 +4,7 @@ import { NgForm } from "@angular/forms";
 import { Ingredient } from "src/app/shared/ingredient.model";
 import { Store } from "@ngrx/store";
 import { DeleteIngredient, StopEdit } from "../store/shopping-list.actions";
-import { AppState } from "../store/shopping-list.reducer";
+import { AppState } from "../../store/app.store";
 import {
   AddIngredient,
   UpdateIngredient,
