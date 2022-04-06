@@ -28,13 +28,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   addIngredients(ingredients: Ingredient[]) {
-    ingredients.forEach((ingredient) => {
-      this.shoppingListService.addIngredient(ingredient);
-    });
+    this.shoppingListService.addIngredients(ingredients);
   }
 
   deleteRecipe(id: number) {
-    console.log(id);
     this.recipeService.deleteRecipe(id);
     this.router.navigate(["recipes"]);
   }
