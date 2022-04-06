@@ -3,7 +3,9 @@ import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { RecipeService } from "../recipe.service";
 import { Recipe } from "../recipe.model";
-import { ShoppingListService } from "../../shopping-list/shopping-list.service";
+import { Store } from "@ngrx/store";
+import { AppState } from "../../shopping-list/store/shopping-list.reducer";
+import { DeleteIngredient } from "../../shopping-list/store/shopping-list.actions";
 
 @Component({
   selector: "app-recipe-edit",
@@ -15,7 +17,7 @@ export class RecipeEditComponent implements OnInit {
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private router: Router,
-    private shoppingListService: ShoppingListService
+    private store: Store<AppState>
   ) {}
   recipeForm: FormGroup;
   recipeId: number;
@@ -78,7 +80,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   onDeleteIngredient(ingredient: any) {
-    this.shoppingListService.deleteIngredient(ingredient.value);
+    this.store.dispatch(new DeleteIngredient());
     (<FormArray>this.recipeForm.get("ingredients")).controls = (<FormArray>(
       this.recipeForm.get("ingredients")
     )).controls.filter((formGroup: FormGroup) => {

@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 import { Ingredient } from "../shared/ingredient.model";
-import { ShoppingListService } from "./shopping-list.service";
 import { Observable } from "rxjs";
 import { AppState, State } from "./store/shopping-list.reducer";
 import { StartEdit } from "./store/shopping-list.actions";
