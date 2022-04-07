@@ -4,17 +4,19 @@ import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AppState } from "../store/app.store";
 import { Logout } from "../auth/store/auth.actions";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isAuthenticated: Boolean;
+  isAuthenticated: boolean = false;
   private userSubscription: Subscription;
   constructor(
     private store: Store<AppState>,
-    private dataStorageService: DataStorageService
+    private dataStorageService: DataStorageService,
+    private router: Router
   ) {}
 
   onSave() {
@@ -23,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   onLogout() {
     this.store.dispatch(new Logout());
+    this.router.navigate(["auth"]);
   }
 
   onFetchData() {
