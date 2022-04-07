@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DataStorageService } from "../shared/data-storage.service";
-import { AuthService } from "../auth/auth.service";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AppState } from "../store/app.store";
@@ -11,7 +10,7 @@ import { Logout } from "../auth/store/auth.actions";
   templateUrl: "./header.component.html",
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  isAuthenticated: Boolean = false;
+  isAuthenticated: Boolean;
   private userSubscription: Subscription;
   constructor(
     private store: Store<AppState>,
@@ -32,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userSubscription = this.store.select("auth").subscribe((stateData) => {
-      this.isAuthenticated = !!stateData.user;
+      this.isAuthenticated = stateData.isAuthenticated;
     });
   }
 

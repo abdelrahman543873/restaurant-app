@@ -13,11 +13,7 @@ export class AuthService {
     private readonly http: HttpClient,
     private store: Store<AppState>
   ) {}
-
-  user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
-
   private tokenExpirationTimer: any;
-
   signup(email: string, password: string) {
     return this.http.post("https://signup", { email, password }).pipe(
       catchError((error) => {
@@ -48,13 +44,6 @@ export class AuthService {
   autoLogin() {
     this.store.select("auth").subscribe((stateData) => {
       if (!stateData.user) return;
-      const loadedUser = new User(
-        stateData.user.email,
-        stateData.user.id,
-        "randomToken",
-        new Date()
-      );
-      if (loadedUser.token) this.user.next(loadedUser);
     });
   }
 

@@ -1,4 +1,3 @@
-import { User } from "../user.model";
 import { AuthActions, LOGIN, LOGOUT } from "./auth.actions";
 
 export interface AuthState {
@@ -8,9 +7,10 @@ export interface AuthState {
     _token: string;
     _tokenExpirationDate: Date;
   };
+  isAuthenticated: boolean;
 }
 
-export const initialState = { user: null };
+export const initialState: AuthState = { user: null, isAuthenticated: false };
 
 export const authReducer = (
   state: AuthState = initialState,
@@ -18,9 +18,9 @@ export const authReducer = (
 ) => {
   switch (action.type) {
     case LOGIN:
-      return { ...initialState, user: action.payload };
+      return { ...initialState, user: action.payload, isAuthenticated: true };
     case LOGOUT:
-      return { ...initialState, user: null };
+      return { ...initialState, user: null, isAuthenticated: false };
     default:
       return state;
   }

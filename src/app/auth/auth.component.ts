@@ -4,6 +4,9 @@ import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 import { Router } from "@angular/router";
 import { User } from "./user.model";
+import { Store } from "@ngrx/store";
+import { AppState } from "../store/app.store";
+import { Login } from "./store/auth.actions";
 
 @Component({
   selector: "app-auth",
@@ -14,7 +17,11 @@ export class AuthComponent implements OnInit {
   isLoginMode = true;
   isLoading = false;
   error: string = null;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {}
 
@@ -41,8 +48,13 @@ export class AuthComponent implements OnInit {
       (error) => {
         this.isLoading = false;
         this.error = error.message;
-        this.authService.user.next(
-          new User(input.value.email, "randomId", "randomToken", new Date())
+        this.store.dispatch(
+          new Login({
+            email: input.value.email,
+            id: "randomId",
+            _token: "randomString",
+            _tokenExpirationDate: new Date(),
+          })
         );
       }
     );
