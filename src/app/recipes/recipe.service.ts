@@ -8,8 +8,6 @@ import { Recipe } from "./recipe.model";
 })
 export class RecipeService {
   constructor() {}
-  recipeSelected = new Subject<Recipe>();
-  recipeDeleted = new Subject<Recipe[]>();
   private recipes: Recipe[] = [
     new Recipe(
       1,
@@ -26,8 +24,4 @@ export class RecipeService {
       [new Ingredient("cheese", 10)]
     ),
   ];
-
-  getRecipes() {
-    return this.recipes;
-  }
 }

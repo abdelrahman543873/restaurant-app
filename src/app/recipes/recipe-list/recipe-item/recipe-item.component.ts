@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Recipe } from "../../recipe.model";
-import { RecipeService } from "../../recipe.service";
+import { Store } from "@ngrx/store";
+import { AppState } from "src/app/store/app.store";
+import { SelectRecipe } from "../../store/recipe.actions";
 
 @Component({
   selector: "app-recipe-item",
@@ -8,12 +10,12 @@ import { RecipeService } from "../../recipe.service";
   styleUrls: ["./recipe-item.component.css"],
 })
 export class RecipeItemComponent implements OnInit {
-  constructor(private recipeService: RecipeService) {}
+  constructor(private store: Store<AppState>) {}
   @Input() recipe: Recipe;
 
   ngOnInit() {}
 
   onRecipeItemSelect() {
-    this.recipeService.recipeSelected.next(this.recipe);
+    this.store.dispatch(new SelectRecipe(this.recipe));
   }
 }

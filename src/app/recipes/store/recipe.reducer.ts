@@ -1,5 +1,6 @@
 import { Recipe } from "../recipe.model";
-import { Ingredient } from '../../shared/ingredient.model';
+import { Ingredient } from "../../shared/ingredient.model";
+import { SELECT_RECIPE } from "./recipe.actions";
 import {
   RecipeActions,
   SET_RECIPES,
@@ -9,9 +10,11 @@ import {
 
 export interface RecipeState {
   recipes: Recipe[];
+  selectedRecipe: Recipe;
 }
 
 const initialState: RecipeState = {
+  selectedRecipe: null,
   recipes: [
     new Recipe(
       1,
@@ -34,6 +37,8 @@ export const recipeReducer = (state = initialState, action: RecipeActions) => {
   switch (action.type) {
     case SET_RECIPES:
       return { ...state, recipes: [...action.payload] };
+    case SELECT_RECIPE:
+      return { ...state, selectedRecipe: action.payload };
     case DELETE_RECIPE:
       return {
         ...state,

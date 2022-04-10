@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Recipe } from "../recipe.model";
 import { Ingredient } from "../../shared/ingredient.model";
 import { ActivatedRoute, Router } from "@angular/router";
-import { RecipeService } from "../recipe.service";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AddIngredients } from "../../shopping-list/store/shopping-list.actions";

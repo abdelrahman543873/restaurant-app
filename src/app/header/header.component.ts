@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { DataStorageService } from "../shared/data-storage.service";
 import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AppState } from "../store/app.store";
@@ -13,15 +12,7 @@ import { Router } from "@angular/router";
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   private userSubscription: Subscription;
-  constructor(
-    private store: Store<AppState>,
-    private dataStorageService: DataStorageService,
-    private router: Router
-  ) {}
-
-  onSave() {
-    this.dataStorageService.storeRecipes();
-  }
+  constructor(private store: Store<AppState>, private router: Router) {}
 
   onLogout() {
     this.store.dispatch(new Logout());
