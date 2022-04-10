@@ -28,10 +28,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(["auth"]);
   }
 
-  onFetchData() {
-    this.dataStorageService.getRecipes();
-  }
-
   ngOnInit(): void {
     this.userSubscription = this.store.select("auth").subscribe((stateData) => {
       this.isAuthenticated = stateData.isAuthenticated;

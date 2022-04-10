@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
 import { Store } from "@ngrx/store";
 import { AddIngredients } from "../../shopping-list/store/shopping-list.actions";
 import { AppState } from "../../store/app.store";
+import { DeleteRecipe } from "../store/recipe.actions";
 
 @Component({
   selector: "app-recipe-detail",
@@ -15,7 +16,6 @@ import { AppState } from "../../store/app.store";
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   constructor(
-    private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AppState>
@@ -25,7 +25,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe((params) => {
-      this.recipe = this.recipeService.getRecipe(+params["id"]);
+      this.store.select("recipes").subscribe((stateData) => {
+        this.recipe = stateData.recipes.filter((recipeEl) => {
+          return recipeEl.id === +params["id"];
+        })[0];
+      });
     });
   }
 
@@ -34,7 +38,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   deleteRecipe(id: number) {
-    this.recipeService.deleteRecipe(id);
+    this.store.dispatch(new DeleteRecipe(id));
     this.router.navigate(["recipes"]);
   }
 

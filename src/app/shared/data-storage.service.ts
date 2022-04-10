@@ -16,8 +16,4 @@ export class DataStorageService {
         console.log(response);
       });
   }
-
-  getRecipes() {
-    return this.http.get("urlOfOurBackend").subscribe((data) => {});
-  }
 }

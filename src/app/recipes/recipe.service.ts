@@ -30,27 +30,4 @@ export class RecipeService {
   getRecipes() {
     return this.recipes;
   }
-
-  addRecipe(recipe: Recipe) {
-    this.recipes.push(recipe);
-  }
-
-  updateRecipe(index: number, recipe: Recipe) {
-    this.recipes[index] = recipe;
-  }
-
-  getRecipe(id: number) {
-    const recipe = this.recipes.filter((recipeEl) => {
-      return recipeEl.id === id;
-    });
-    return recipe[0];
-  }
-
-  deleteRecipe(id: number) {
-    const recipes = this.recipes.filter((recipeEl) => {
-      return recipeEl.id !== id;
-    });
-    this.recipes = recipes;
-    this.recipeDeleted.next(recipes);
-  }
 }

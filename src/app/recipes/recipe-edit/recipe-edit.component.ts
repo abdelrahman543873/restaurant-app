@@ -5,7 +5,8 @@ import { RecipeService } from "../recipe.service";
 import { Recipe } from "../recipe.model";
 import { Store } from "@ngrx/store";
 import { DeleteIngredient } from "../../shopping-list/store/shopping-list.actions";
-import { AppState } from '../../store/app.store';
+import { AppState } from "../../store/app.store";
+import { UpdateRecipe } from "../store/recipe.actions";
 
 @Component({
   selector: "app-recipe-edit",
@@ -34,24 +35,26 @@ export class RecipeEditComponent implements OnInit {
   }
 
   private initForm() {
-    const recipe = this.recipeService.getRecipe(this.recipeId);
-    const formArray = [];
-    for (let ingredient of recipe.ingredients) {
-      formArray.push(
-        new FormGroup({
-          name: new FormControl(ingredient.name, Validators.required),
-          amount: new FormControl(ingredient.amount, [
-            Validators.required,
-            Validators.pattern(/^[1-9]+[0-9]*$/),
-          ]),
-        })
-      );
-    }
-    this.recipeForm = new FormGroup({
-      name: new FormControl(recipe.name, Validators.required),
-      imagePath: new FormControl(recipe.imagePath, Validators.required),
-      description: new FormControl(recipe.description, Validators.required),
-      ingredients: new FormArray(formArray),
+    this.store.select("recipes").subscribe((stateData) => {
+      const recipe = stateData.recipes[this.recipeId];
+      const formArray = [];
+      for (let ingredient of recipe.ingredients) {
+        formArray.push(
+          new FormGroup({
+            name: new FormControl(ingredient.name, Validators.required),
+            amount: new FormControl(ingredient.amount, [
+              Validators.required,
+              Validators.pattern(/^[1-9]+[0-9]*$/),
+            ]),
+          })
+        );
+      }
+      this.recipeForm = new FormGroup({
+        name: new FormControl(recipe.name, Validators.required),
+        imagePath: new FormControl(recipe.imagePath, Validators.required),
+        description: new FormControl(recipe.description, Validators.required),
+        ingredients: new FormArray(formArray),
+      });
     });
   }
 
@@ -63,7 +66,9 @@ export class RecipeEditComponent implements OnInit {
       this.recipeForm.value["imagePath"],
       this.recipeForm.value["ingredients"]
     );
-    this.recipeService.updateRecipe(this.recipeId - 1, recipe);
+    this.store.dispatch(
+      new UpdateRecipe({ id: this.recipeId - 1, newRecipe: recipe })
+    );
     this.router.navigate(["recipes"]);
   }
 
