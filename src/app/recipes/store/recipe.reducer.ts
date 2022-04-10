@@ -1,6 +1,6 @@
 import { Recipe } from "../recipe.model";
 import { Ingredient } from "../../shared/ingredient.model";
-import { SELECT_RECIPE } from "./recipe.actions";
+import { SELECT_RECIPE, ADD_RECIPE } from "./recipe.actions";
 import {
   RecipeActions,
   SET_RECIPES,
@@ -37,6 +37,8 @@ export const recipeReducer = (state = initialState, action: RecipeActions) => {
   switch (action.type) {
     case SET_RECIPES:
       return { ...state, recipes: [...action.payload] };
+    case ADD_RECIPE:
+      return { ...state, recipes: [...state.recipes, action.payload] };
     case SELECT_RECIPE:
       return { ...state, selectedRecipe: action.payload };
     case DELETE_RECIPE:
